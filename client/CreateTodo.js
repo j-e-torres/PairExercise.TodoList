@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import axios from 'axios'
 
 export default class CreateTodo extends Component {
   constructor(){
@@ -9,18 +10,28 @@ export default class CreateTodo extends Component {
     }
   }
   handleChange = ({target}) => {
-    this.setState({[target.name]:target.value})
+    // console.log(target)
+    this.setState({[target.name]: target.value})
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log('this is the state', this.state);
+    axios.post('/api/todos', {...this.state})
+      .then((response) => response.data)
+      .then((data) => this.props.addTodo(data))
+      .catch(err => console.log(err));
   }
   render () {
     return (
       <form>
         <label htmlFor="taskName"> taskName: </label>
-        <input name="taskName" type="text" value="taskName"/>
+        <input name="taskName" type="text" onChange={this.handleChange} />
 
-        <label htmlFor="assignee" onChange={handleChange}> assignee: </label>
-        <input name="assignee" type="text" value="assignee"/>
+        <label htmlFor="assignee"> assignee: </label>
+        <input name="assignee" type="text" onChange={this.handleChange} />
 
-        <button type="submit"> Submit</button>
+        <button type="submit" onClick={this.handleSubmit}> Submit</button>
 
       </form>
     )
