@@ -10,12 +10,18 @@ export default class Todos extends Component {
       todos: []
     }
     this.addTodo = this.addTodo.bind(this)
+    this.destroyTodo = this.destroyTodo.bind(this);
   }
 
   addTodo (data) {
     const todos = this.state.todos;
     todos.push(data)
     this.setState({todos})
+  }
+
+  destroyTodo (id) {
+    axios.delete(`/api/todos/${id}`)
+      .then(() => this.componentDidMount())
   }
 
   async componentDidMount () {
@@ -28,7 +34,7 @@ export default class Todos extends Component {
       <div id='todos'>
         <CreateTodo addTodo={this.addTodo} />
         {
-          this.state.todos.map(todo => <Todo todo={todo} key={todo.id} />)
+          this.state.todos.map(todo => <Todo destroyTodo={this.destroyTodo} todo={todo} key={todo.id} />)
         }
       </div>
     )
