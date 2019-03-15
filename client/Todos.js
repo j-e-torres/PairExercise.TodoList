@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import Todo from './Todo'
 import CreateTodo from './CreateTodo'
+import UpdateTodo from './UpdateTodo';
 
 export default class Todos extends Component {
   constructor () {
@@ -24,6 +25,7 @@ export default class Todos extends Component {
       .then(() => this.componentDidMount())
   }
 
+
   async componentDidMount () {
     const res = await axios.get('/api/todos')
     this.setState({todos: res.data})
@@ -36,6 +38,7 @@ export default class Todos extends Component {
         {
           this.state.todos.map(todo => <Todo destroyTodo={this.destroyTodo} todo={todo} key={todo.id} />)
         }
+        
       </div>
     )
   }

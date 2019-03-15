@@ -17,6 +17,10 @@ export default class SingleTodo extends Component {
     const res = await axios.get(`/api/todos/${todoId}`)
     this.setState({todo: res.data})
   }
+  updateTodo(id){
+    axios.put(`/api/todos/${id}`)
+    .then(()=> this.componentDidMount())
+  }
 
   render () {
     const todo = this.state.todo
@@ -24,7 +28,7 @@ export default class SingleTodo extends Component {
     return (
       <div id='single-todo'>
         <Todo todo={todo} />
-        <UpdateTodo />
+        <UpdateTodo updateTodo={this.updateTodo}/>
         <Link to='/'>Back</Link>
       </div>
     )

@@ -9,7 +9,7 @@ export default class Main extends Component {
       <div id='main'>
         <h1>Todos</h1>
         <Route exact path='/' component={Todos} />
-        <Route path='/todos/:todoId' component={SingleTodo} />
+        <Route exact path='/todos/:todoId' component={SingleTodo} />
       </div>
     )
   }
